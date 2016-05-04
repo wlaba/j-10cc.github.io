@@ -1,0 +1,38 @@
+
+*{margin:0;padding: 0;}
+
+.con{
+	height: 800px;
+	width: 800px;
+	margin:0 auto;
+}
+
+.con table{
+	margin:0 auto;
+	margin-top:100px;
+	text-align: center;
+	border-collapse:collapse;
+	border-spacing:0;
+}
+
+th {
+	height: 50px;
+	width: 100px;
+	border:1px solid #000;
+	color:#FFF;
+	background-color:#DCDCDC;
+	margin: 0px;
+}
+
+td{
+	height: 40px;
+	width: 100px;
+	border: 1px solid #000;
+	margin: 0px;
+
+}
+
+th:hover{
+	color:blue;
+	cursor: pointer;
+}

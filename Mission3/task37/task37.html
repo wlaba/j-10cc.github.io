@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <title>task37</title>
+    <style>
+        html{
+            width: 100%;
+            height: 100%;
+        }
+        body{
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #FFFFFF;
+        }
+        #button{
+            position: absolute;
+            top:20%;
+            left: 50%;
+        }
+        #button:hover{
+            cursor: pointer;
+        }
+        #cover{
+            background-color: #E0E0E0;
+            opacity: 0.5;
+            filter:alpha(opacity=70);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top:0;
+            left: 0;
+            z-index: 1;
+            display: none;
+        }
+        #ui{
+            opacity: 0.7;
+            filter:alpha(opacity=70);
+            width: 500px;
+            height: 300px;
+            margin: -150px 0 0 -150px;
+            position: fixed;
+            top:50%;
+            left: 50%;
+            z-index: 2;
+            border: 3px solid #000000;
+            padding: 5px;
+            box-sizing: border-box;
+            display: none;
+            background-color: #ffffff;
+        }
+        #close{
+            float: right;
+            display: block;
+            font-weight: bold;
+        }
+        #close:hover{
+            cursor: pointer;
+        }
+        #close:after{
+            clear: both;
+        }
+        #operate{
+            width: 100%;
+            height: 50px;
+            position: absolute;
+            bottom: 0;
+            overflow: hidden;
+            zoom: 1;
+        }
+        #operate div{
+            width: 30%;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 20px;
+            border: 2px solid #000000;
+            float: left;
+            margin-left: 10%;
+            font-weight: bold;
+
+        }
+        #operate div:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="button">弹出悬浮窗</div>
+    <div id="cover"></div>
+    <div id="ui">
+        <span id="close">X</span>
+        <p>&nbsp;&nbsp;&nbsp;这是一个浮出层</p>
+        <div id="operate">
+            <div id="confirm">确定</div>
+            <div id="cancel">取消</div>
+        </div>
+    </div>
+<script type="text/javascript">
+    (function(){
+        var isDraggable=false;
+
+        var regEvent=function(node, event, func){
+            if (node.addEventListener)
+                node.addEventListener(event, func);
+            else if (node.attachEvent)
+                node.attachEvent("on" + event, func);
+            else
+                node["on" + event] = func;
+        };
+        var button=document.getElementById("button");
+        var cover=document.getElementById("cover");
+        var ui=document.getElementById("ui");
+
+        function toggleUI(node){
+            if(node.style.display=="none"||node.style.display==""){
+                cover.style.display="block";
+                ui.style.display="block";
+            }else{
+                cover.style.display="none";
+                ui.style.display="none";
+            }
+
+        }
+        regEvent(button,"click",function(){
+            toggleUI(ui);
+        });
+        regEvent(ui,"click",function(e){
+            var target=window.event?window.event.srcElement: e.target;
+            var id=target.getAttribute("id");
+            if(id=="close"||id=="cancel"){
+                toggleUI(ui);
+            }
+        });
+        regEvent(cover,"click",function(){toggleUI(ui)});
+
+        regEvent(ui,"mousedown",function(e){
+            var target=window.event?window.event.srcElement: e.target;
+            var id=target.getAttribute("id");
+            if(id=="ui")
+                isDraggable=true;
+        });
+        regEvent(ui,"mouseup",function(){
+            isDraggable=false;
+        });
+
+        regEvent(window,"mousemove",function(e){
+            if(isDraggable) {
+                var event = e || window.event;
+                ui.style.left = event.clientX + "px";
+                ui.style.top = event.clientY + "px";
+            }
+        })
+
+
+    })();
+</script>
+</body>
+</html>
